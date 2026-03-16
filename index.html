@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CGO Growth Operating System | v1.0</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+        body { font-family: 'Inter', sans-serif; background-color: #F9FAFB; -webkit-font-smoothing: antialiased; }
+        .page-content { display: none; }
+        .page-content.active { display: block; animation: fadeIn 0.3s ease-in-out; }
+        .nav-item.active { background-color: #F3F4F6; border-left: 4px solid #2563EB; color: #111827; font-weight: 700; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
+        @media print { .no-print { display: none !important; } .print-only { display: block !important; } body { background: white; } }
+    </style>
+</head>
+<body class="flex h-screen overflow-hidden">
+
+    <aside class="w-64 bg-white border-r border-gray-200 flex flex-col no-print">
+        <div class="p-6 border-b">
+            <h1 class="text-xl font-black text-gray-900 tracking-tight">Growth<span class="text-blue-600">OS</span></h1>
+            <p class="text-[10px] text-gray-400 font-bold uppercase tracking-widest mt-1">Enterprise Dashboard</p>
+        </div>
+        
+        <nav class="flex-1 overflow-y-auto p-4 space-y-1">
+            <div class="px-3 py-2 text-[10px] font-bold text-gray-400 uppercase tracking-widest">Dashboards</div>
+            <button onclick="showPage('executive', this)" class="nav-item active w-full flex items-center p-3 text-sm text-gray-600 rounded-lg transition-all">
+                <i class="fa-solid fa-gauge-high mr-3 w-5"></i> Executive Dash
+            </button>
+            <button onclick="showPage('radar', this)" class="nav-item w-full flex items-center p-3 text-sm text-gray-600 rounded-lg">
+                <i class="fa-solid fa-satellite-dish mr-3 w-5"></i> Weekly Radar
+            </button>
+            
+            <div class="px-3 py-2 mt-4 text-[10px] font-bold text-gray-400 uppercase tracking-widest">Marketing & ROI</div>
+            <button onclick="showPage('campaign', this)" class="nav-item w-full flex items-center p-3 text-sm text-gray-600 rounded-lg">
+                <i class="fa-solid fa-bullhorn mr-3 w-5"></i> Campaign Intel
+            </button>
+            <button onclick="showPage('roas', this)" class="nav-item w-full flex items-center p-3 text-sm text-gray-600 rounded-lg">
+                <i class="fa-solid fa-money-bill-trend-up mr-3 w-5"></i> Monthly ROAS
+            </button>
+
+            <div class="px-3 py-2 mt-4 text-[10px] font-bold text-gray-400 uppercase tracking-widest">Sales & Ops</div>
+            <button onclick="showPage('leads', this)" class="nav-item w-full flex items-center p-3 text-sm text-gray-600 rounded-lg">
+                <i class="fa-solid fa-address-book mr-3 w-5"></i> Lead Tracker
+            </button>
+            <button onclick="showPage('opportunity', this)" class="nav-item w-full flex items-center p-3 text-sm text-gray-600 rounded-lg">
+                <i class="fa-solid fa-fire mr-3 w-5"></i> Lead Opportunity
+            </button>
+            <button onclick="showPage('tasks', this)" class="nav-item w-full flex items-center p-3 text-sm text-gray-600 rounded-lg">
+                <i class="fa-solid fa-list-check mr-3 w-5"></i> Team Tasks
+            </button>
+            
+            <div class="px-3 py-2 mt-4 text-[10px] font-bold text-gray-400 uppercase tracking-widest">Strategic</div>
+            <button onclick="showPage('forecast', this)" class="nav-item w-full flex items-center p-3 text-sm text-gray-600 rounded-lg">
+                <i class="fa-solid fa-crystal-ball mr-3 w-5"></i> Growth Forecast
+            </button>
+            <button onclick="showPage('director', this)" class="nav-item w-full flex items-center p-3 text-sm text-gray-600 rounded-lg">
+                <i class="fa-solid fa-user-tie mr-3 w-5"></i> Director Update
+            </button>
+        </nav>
+
+        <div class="p-4 bg-gray-50 border-t">
+            <button onclick="showPage('export', this)" class="w-full bg-gray-900 text-white py-2.5 rounded-lg text-xs font-bold hover:bg-black flex items-center justify-center">
+                <i class="fa-solid fa-file-export mr-2"></i> MONTHLY REPORT
+            </button>
+        </div>
+    </aside>
+
+    <main class="flex-1 flex flex-col overflow-hidden bg-gray-50">
+        <header class="h-16 bg-white border-b flex items-center justify-between px-8 shadow-sm no-print">
+            <h2 id="page-title" class="font-bold text-gray-800">Executive Dashboard</h2>
+            <div class="flex items-center space-x-4">
+                <span class="text-[10px] font-black uppercase text-green-600 bg-green-50 px-2 py-1 rounded">Live OS v1.0</span>
+                <div class="w-8 h-8 rounded-full bg-blue-600 flex items-center justify-center text-white text-[10px] font-bold">CGO</div>
+            </div>
+        </header>
+
+        <div class="flex-1 overflow-y-auto p-8">
+
+            <div id="executive" class="page-content active space-y-6">
+                <div class="grid grid-cols-1 md:grid-cols-5 gap-4">
+                    <div class="bg-white p-5 rounded-xl border border-gray-200 shadow-sm"><p class="text-[10px] font-bold text-gray-400 uppercase">Total Leads</p><p class="text-2xl font-black">1,240</p><span class="text-[10px] text-green-600 font-bold">🟢 Healthy</span></div>
+                    <div class="bg-white p-5 rounded-xl border border-gray-200 shadow-sm"><p class="text-[10px] font-bold text-gray-400 uppercase">Avg CPL</p><p class="text-2xl font-black">$14.20</p><span class="text-[10px] text-yellow-600 font-bold">🟡 Watch</span></div>
+                    <div class="bg-white p-5 rounded-xl border border-gray-200 shadow-sm"><p class="text-[10px] font-bold text-gray-400 uppercase">Conv Rate</p><p class="text-2xl font-black">4.2%</p><span class="text-[10px] text-red-600 font-bold">🔴 Action</span></div>
+                    <div class="bg-white p-5 rounded-xl border border-gray-200 shadow-sm"><p class="text-[10px] font-bold text-gray-400 uppercase">Revenue</p><p class="text-2xl font-black">$184k</p><span class="text-[10px] text-green-600 font-bold">🟢 Healthy</span></div>
+                    <div class="bg-white p-5 rounded-xl border border-gray-200 shadow-sm"><p class="text-[10px] font-bold text-gray-400 uppercase">Total ROAS</p><p class="text-2xl font-black">4.5x</p><span class="text-[10px] text-green-600 font-bold">🟢 Healthy</span></div>
+                </div>
+                <div class="bg-white rounded-2xl border border-dashed border-gray-300 h-96 flex items-center justify-center text-gray-400">
+                    <div class="text-center">
+                        <i class="fa-solid fa-chart-line text-4xl mb-4"></i>
+                        <p class="text-sm font-medium">Historical Performance Funnel Chart</p>
+                    </div>
+                </div>
+            </div>
+
+            <div id="radar" class="page-content space-y-6">
+                <div class="bg-white rounded-2xl border border-gray-200 p-8 shadow-sm">
+                    <h3 class="font-black text-gray-800 uppercase text-xs mb-8">Funnel Velocity Radar</h3>
+                    <div class="flex items-center justify-around">
+                        <div class="text-center"><div class="w-20 h-20 rounded-full border-4 border-blue-500 flex items-center justify-center font-bold text-xl mb-2">342</div><p class="text-xs font-bold text-gray-400 uppercase">Leads</p></div>
+                        <i class="fa-solid fa-chevron-right text-gray-200"></i>
+                        <div class="text-center"><div class="w-20 h-20 rounded-full border-4 border-blue-300 flex items-center justify-center font-bold text-xl mb-2">82</div><p class="text-xs font-bold text-gray-400 uppercase">Previews</p></div>
+                        <i class="fa-solid fa-chevron-right text-gray-200"></i>
+                        <div class="text-center"><div class="w-20 h-20 rounded-full border-4 border-green-500 flex items-center justify-center font-bold text-xl mb-2">14</div><p class="text-xs font-bold text-gray-400 uppercase">Sales</p></div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="campaign" class="page-content space-y-6">
+                <div class="bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden">
+                    <table class="w-full text-left text-sm">
+                        <thead class="bg-gray-50 border-b">
+                            <tr><th class="p-4 uppercase text-[10px] font-bold text-gray-400">Campaign</th><th class="p-4 uppercase text-[10px] font-bold text-gray-400">Spend</th><th class="p-4 uppercase text-[10px] font-bold text-gray-400">Revenue</th><th class="p-4 uppercase text-[10px] font-bold text-gray-400 text-center">ROAS</th></tr>
+                        </thead>
+                        <tbody class="divide-y text-gray-700">
+                            <tr><td class="p-4 font-bold">Meta Scale 2.0</td><td class="p-4">$5,000</td><td class="p-4">$24,000</td><td class="p-4 text-center"><span class="bg-green-100 text-green-700 px-3 py-1 rounded-full text-xs font-black">4.8x</span></td></tr>
+                            <tr><td class="p-4 font-bold">Google Search Gen</td><td class="p-4">$3,500</td><td class="p-4">$14,000</td><td class="p-4 text-center"><span class="bg-green-100 text-green-700 px-3 py-1 rounded-full text-xs font-black">4.0x</span></td></tr>
+                            <tr><td class="p-4 font-bold">TikTok Reach</td><td class="p-4">$2,000</td><td class="p-4">$3,500</td><td class="p-4 text-center"><span class="bg-red-100 text-red-700 px-3 py-1 rounded-full text-xs font-black">1.7x</span></td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div id="roas" class="page-content space-y-6">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="bg-white p-8 rounded-2xl border border-gray-200 shadow-sm">
+                        <h3 class="font-bold text-gray-400 text-[10px] uppercase mb-2">Blended Monthly ROAS</h3>
+                        <p class="text-5xl font-black text-blue-600 tracking-tight">4.52x</p>
+                    </div>
+                    <div class="bg-white p-8 rounded-2xl border border-gray-200 shadow-sm">
+                        <h3 class="font-bold text-gray-400 text-[10px] uppercase mb-2">Marketing Spend Efficiency</h3>
+                        <div class="w-full bg-gray-100 h-4 rounded-full mt-4 overflow-hidden">
+                            <div class="bg-blue-600 h-full w-[75%]"></div>
+                        </div>
+                        <p class="text-[10px] font-bold text-gray-400 mt-2 uppercase text-right">75% Target Efficiency</p>
+                    </div>
+                </div>
+            </div>
+
+            <div id="leads" class="page-content space-y-6">
+                <div class="bg-white p-6 rounded-xl border border-gray-200 shadow-sm grid grid-cols-5 gap-4 mb-6">
+                    <input type="text" placeholder="Lead Name" class="border p-2 rounded text-sm">
+                    <select class="border p-2 rounded text-sm"><option>Meta Ads</option><option>TikTok</option></select>
+                    <select class="border p-2 rounded text-sm"><option>🔥 Hot</option><option>⚡ Warm</option></select>
+                    <select class="border p-2 rounded text-sm"><option>New Lead</option><option>Contacted</option></select>
+                    <button class="bg-blue-600 text-white font-bold rounded text-sm">Add Lead</button>
+                </div>
+                <div class="bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden">
+                    <table class="w-full text-left text-sm">
+                        <thead class="bg-gray-50 border-b"><tr><th class="p-4 uppercase text-[10px] font-bold text-gray-400">Lead</th><th class="p-4 uppercase text-[10px] font-bold text-gray-400">Quality</th><th class="p-4 uppercase text-[10px] font-bold text-gray-400">Response</th><th class="p-4 uppercase text-[10px] font-bold text-gray-400">Action</th></tr></thead>
+                        <tbody class="divide-y"><tr><td class="p-4 font-bold">John Cooper</td><td class="p-4">🔥 Hot</td><td class="p-4"><span class="text-green-600 font-bold">12 mins</span></td><td class="p-4 text-xs font-medium text-blue-600">Send Information</td></tr></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div id="opportunity" class="page-content space-y-6">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="bg-white p-6 rounded-2xl border border-l-8 border-orange-500 shadow-sm">
+                        <h3 class="text-xs font-black text-orange-500 uppercase mb-1 tracking-widest">Hot Pipeline Potential</h3>
+                        <p class="text-3xl font-black text-gray-800">$44,400</p>
+                        <p class="text-xs text-gray-400 mt-1">12 leads ready for immediate follow-up</p>
+                    </div>
+                    <div class="bg-white p-6 rounded-2xl border border-l-8 border-blue-400 shadow-sm">
+                        <h3 class="text-xs font-black text-blue-400 uppercase mb-1 tracking-widest">Warm Pipeline Potential</h3>
+                        <p class="text-3xl font-black text-gray-800">$166,500</p>
+                        <p class="text-xs text-gray-400 mt-1">45 leads in nurture cycle</p>
+                    </div>
+                </div>
+            </div>
+
+            <div id="tasks" class="page-content space-y-6">
+                <div class="bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden">
+                    <table class="w-full text-left text-sm">
+                        <thead class="bg-gray-100 border-b"><tr><th class="p-4 font-bold text-[10px] uppercase text-gray-400">Owner</th><th class="p-4 font-bold text-[10px] uppercase text-gray-400">Focus</th><th class="p-4 font-bold text-[10px] uppercase text-gray-400">Deadline</th></tr></thead>
+                        <tbody class="divide-y"><tr><td class="p-4 font-bold">Sarah</td><td class="p-4">Q2 Video Ad Hooks</td><td class="p-4 text-gray-400">Mar 20</td></tr></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div id="forecast" class="page-content space-y-6">
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div class="bg-white p-8 rounded-2xl border border-gray-200 shadow-sm"><h3 class="text-[10px] font-bold text-gray-400 uppercase">Target Revenue</h3><p class="text-3xl font-black">$200,000</p></div>
+                    <div class="bg-blue-600 p-8 rounded-2xl shadow-lg"><h3 class="text-[10px] font-bold text-blue-100 uppercase">Expected Revenue</h3><p class="text-3xl font-black text-white">$178,000</p></div>
+                    <div class="bg-white p-8 rounded-2xl border border-gray-200 shadow-sm"><h3 class="text-[10px] font-bold text-gray-400 uppercase">Revenue Gap</h3><p class="text-3xl font-black text-red-600">-$22,000</p></div>
+                </div>
+            </div>
+
+            <div id="director" class="page-content space-y-6">
+                <div class="bg-white rounded-2xl border border-gray-200 p-8 space-y-6 shadow-sm">
+                    <div><label class="block text-xs font-black text-gray-400 uppercase mb-2 tracking-widest">Strategic Insight - Week 12</label><textarea class="w-full h-32 border rounded-xl p-4 text-sm bg-gray-50 outline-none focus:ring-2 focus:ring-blue-500" placeholder="Type weekly insight here..."></textarea></div>
+                    <div class="grid grid-cols-2 gap-4">
+                        <div class="p-4 bg-gray-50 rounded-xl border border-gray-100"><p class="text-[10px] font-bold text-gray-400 uppercase">Focus Next Week</p><p class="text-sm font-semibold mt-1">Scale Meta Broad Campaign</p></div>
+                        <div class="p-4 bg-gray-50 rounded-xl border border-gray-100"><p class="text-[10px] font-bold text-gray-400 uppercase">Team Vibe</p><p class="text-sm font-semibold mt-1">🟢 High Productivity</p></div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="export" class="page-content">
+                <div class="max-w-4xl mx-auto bg-white p-12 rounded-3xl shadow-2xl border-t-8 border-blue-600 space-y-12">
+                    <div class="flex justify-between border-b pb-8">
+                        <div><h1 class="text-4xl font-black text-gray-900 tracking-tighter">MONTHLY GROWTH REPORT</h1><p class="text-gray-400 font-bold uppercase tracking-widest text-xs mt-2">MARCH 2026 • CONFIDENTIAL</p></div>
+                        <img src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png" class="w-16 h-16 opacity-10">
+                    </div>
+                    <div class="grid grid-cols-4 gap-8">
+                        <div><p class="text-[10px] font-bold text-gray-400 uppercase">Revenue</p><p class="text-xl font-bold">$184k</p></div>
+                        <div><p class="text-[10px] font-bold text-gray-400 uppercase">ROAS</p><p class="text-xl font-bold text-green-600">4.5x</p></div>
+                        <div><p class="text-[10px] font-bold text-gray-400 uppercase">Sales</p><p class="text-xl font-bold">52 Deals</p></div>
+                        <div><p class="text-[10px] font-bold text-gray-400 uppercase">Gap</p><p class="text-xl font-bold text-red-600">-$22k</p></div>
+                    </div>
+                    <div class="p-6 bg-gray-900 rounded-2xl text-white">
+                        <h4 class="text-[10px] font-black text-blue-400 uppercase mb-2 tracking-widest">Executive Summary</h4>
+                        <p class="text-xs leading-relaxed opacity-80">Our growth trajectory remains strong with a 4.5x ROAS. The primary risk is the current conversion gap in the mid-funnel. We recommend shifting $5k from TikTok to Meta Retargeting to close the April revenue gap.</p>
+                    </div>
+                    <button onclick="window.print()" class="no-print w-full py-4 bg-blue-600 text-white font-black rounded-xl hover:bg-blue-700 transition-all shadow-lg shadow-blue-200">GENERATE PDF / PRINT REPORT</button>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <script>
+        function showPage(pageId, btnElement) {
+            // Hide all pages
+            document.querySelectorAll('.page-content').forEach(p => p.classList.remove('active'));
+            // Remove active style from all buttons
+            document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+            
+            // Show target page
+            document.getElementById(pageId).classList.add('active');
+            // Style active button
+            btnElement.classList.add('active');
+            
+            // Update Header Title
+            const titles = {
+                'executive': 'Executive Growth Dashboard',
+                'radar': 'Weekly Growth Radar',
+                'campaign': 'Campaign Performance Intelligence',
+                'roas': 'Monthly ROAS Dashboard',
+                'leads': 'Sales Lead Tracker',
+                'opportunity': 'Lead Opportunity Dashboard',
+                'tasks': 'Marketing Team Weekly Task',
+                'forecast': 'Growth Forecast Intelligence',
+                'director': 'Marketing Director Leadership Update',
+                'export': 'Monthly Growth Report'
+            };
+            document.getElementById('page-title').innerText = titles[pageId];
+        }
+    </script>
+</body>
+</html>
